@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nguyencongsy.models.New;
+import com.nguyencongsy.models.Page;
 import com.nguyencongsy.repositories.INewRepository;
 import com.nguyencongsy.services.INewService;
 
@@ -42,6 +43,36 @@ public class NewService implements INewService {
 		}
 		return lastResult;
 	}
+	
+	@Override
+	public Page<New> GetPage(int PageSize, int PageNumber)  {
+		int i;
+		int len;
+		Page<New> page = new Page<New>();
+		List<New> result = null;
+		List<New> lastResult = new ArrayList<New>();
+		try {
+			result = repository.findAll();
+			len = result.size();
+			if (PageNumber*PageSize < len) {
+				for (i=PageNumber*PageSize; i<PageNumber*PageSize+PageSize; i++)
+				{
+					if (i<len) {
+						lastResult.add(result.get(i));
+					}
+				}
+			page.setPageNumber(PageNumber);
+			page.setPageSize(PageSize);
+			page.setTotalNumberOfPages(123);
+			page.setTotalNumberOfRecords(len);
+			page.setResults(lastResult);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
+	}
+	
 	@Override
 	public void CreateNew(New n)  {
 		try {

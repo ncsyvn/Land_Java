@@ -2,10 +2,12 @@ package com.nguyencongsy.controllers;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,13 +16,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.nguyencongsy.models.Page;
 import com.nguyencongsy.models.Product;
 import com.nguyencongsy.models.Response;
 import com.nguyencongsy.models.request.ProductCreate;
 import com.nguyencongsy.models.request.ProductUpdate;
+import com.nguyencongsy.models.request.UploadImagesModel;
 import com.nguyencongsy.services.IProductService;
 import com.nguyencongsy.utils.ProcessImage;
+@CrossOrigin
 @Controller
 @RequestMapping("/api/Products")
 
@@ -90,6 +96,23 @@ public class ProductController {
 			res.Code = 200;
 			res.Message = "Success";
 			res.Data = productService.GetDetailProduct(ProductId);
+		}
+		catch(Exception e) {
+			res.Code = 500;
+			res.Message = "Fail";
+			res.Data = null;
+			System.out.print(e.getMessage());
+		}
+		return res;
+	}
+	@GetMapping(value="/page")
+	public @ResponseBody Response GetPage(@RequestParam("pagesize") int pagesize, 
+			@RequestParam("pagenumber") int pagenumber) {
+		Response<Page<Product>> res = new Response<Page<Product>>();
+		try {
+			res.Code = 200;
+			res.Message = "Success";
+			res.Data = productService.GetPage(pagesize, pagenumber);
 		}
 		catch(Exception e) {
 			res.Code = 500;
@@ -182,6 +205,29 @@ public class ProductController {
 			res.Code = 200;
 			res.Message = "Success";
 			res.Data = null;
+		}
+		catch(Exception e) {
+			res.Code = 500;
+			res.Message = "Fail";
+			res.Data = null;
+			System.out.print(e.getMessage());
+		}
+		return res;
+	}
+	
+	@PostMapping(value = "/images/upload")
+	public @ResponseBody Response UploadImages(@ModelAttribute UploadImagesModel data) {
+		Response<String> res = new Response<String>();
+		String s = "";
+		ArrayList<MultipartFile> images = data.getImages();
+		for (int i=0; i<images.size(); i++) {
+			s = s + images.get(i).getOriginalFilename();
+		}
+		
+		try {
+			res.Code = 200;
+			res.Message = "Success";
+			res.Data = s;
 		}
 		catch(Exception e) {
 			res.Code = 500;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nguyencongsy.models.Page;
 import com.nguyencongsy.models.Product;
 import com.nguyencongsy.repositories.IProductRepository;
 import com.nguyencongsy.services.IProductService;
@@ -77,6 +78,34 @@ public class ProductService implements IProductService {
 		return lastResult;
 	}
 	
+	@Override
+	public Page<Product> GetPage(int PageSize, int PageNumber)  {
+		int i;
+		int len;
+		Page<Product> page = new Page<Product>();
+		List<Product> result = null;
+		List<Product> lastResult = new ArrayList<Product>();
+		try {
+			result = repository.findAll();
+			len = result.size();
+			if (PageNumber*PageSize < len) {
+				for (i=PageNumber*PageSize; i<PageNumber*PageSize+PageSize; i++)
+				{
+					if (i<len) {
+						lastResult.add(result.get(i));
+					}
+				}
+			page.setPageNumber(PageNumber);
+			page.setPageSize(PageSize);
+			page.setTotalNumberOfPages(123);
+			page.setTotalNumberOfRecords(len);
+			page.setResults(lastResult);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
+	}
 	@Override
 	public void CreateProduct(Product p)  {
 		try {

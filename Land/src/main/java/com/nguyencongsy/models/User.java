@@ -8,38 +8,42 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbUser")
+@Table(name = "AspNetUsers")
 public class User implements Serializable {
-	/**
-	 * 
-	 */
-	private String username;
-	private String password;
-	
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	public User(String username) {
-		super();
-		this.username = username;
-	}
-	
 	@Id
-	@Column(name = "username")
+	@Column(name = "Id")
+	private String id;
+	@Column(name = "Username")
+	private String Username;
+	@Column(name = "PasswordHash")
+	private String Password;
+	@Column(name = "PhoneNumber")
+	private String PhoneNumber;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getUsername() {
-		return this.username;
+		return Username;
 	}
 	public void setUsername(String username) {
-		this.username = username;
+		Username = username;
 	}
-	@Column(name = "password")
 	public String getPassword() {
-		return this.password;
+		return Password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		Password = password;
 	}
+	public String getPhoneNumber() {
+		return PhoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		PhoneNumber = phoneNumber;
+	}
+	
+	
 	
 }

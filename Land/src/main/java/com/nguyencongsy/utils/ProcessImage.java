@@ -3,6 +3,8 @@ package com.nguyencongsy.utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,15 +14,16 @@ public class ProcessImage {
 		if (!file.isEmpty()) {
 			byte[] bytes;
 			try {
+				Random rand = new Random();
+				int rand_int = rand.nextInt(1000000); 
 				bytes = file.getBytes();
 				String fileName = file.getOriginalFilename();
-//				String fileLocation = new File(new String("Uploads/" + fileName));
-				String fileLocation = new File("uploads") + "\\" + fileName;
+				String fileLocation = new File("uploads") + "\\" + fileName + "_" + String.valueOf(rand_int);
 				FileOutputStream fos = new FileOutputStream(fileLocation);
 				fos.write(bytes);
 				fos.close();
 				
-				return "/uploads/" + fileName;
+				return "/uploads/" + fileName + "_" + String.valueOf(rand_int);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -32,3 +35,4 @@ public class ProcessImage {
 	}
 	
 }
+

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nguyencongsy.models.NewCategory;
+import com.nguyencongsy.models.Page;
 import com.nguyencongsy.repositories.INewCategoryRepository;
 import com.nguyencongsy.services.INewCategoryService;
 
@@ -42,6 +43,35 @@ public class NewCategoryService implements INewCategoryService {
 		}
 		return lastResult;
 	}
+	@Override
+	public Page<NewCategory> GetPage(int PageSize, int PageNumber)  {
+		int i;
+		int len;
+		Page<NewCategory> page = new Page<NewCategory>();
+		List<NewCategory> result = null;
+		List<NewCategory> lastResult = new ArrayList<NewCategory>();
+		try {
+			result = repository.findAll();
+			len = result.size();
+			if (PageNumber*PageSize < len) {
+				for (i=PageNumber*PageSize; i<PageNumber*PageSize+PageSize; i++)
+				{
+					if (i<len) {
+						lastResult.add(result.get(i));
+					}
+				}
+			page.setPageNumber(PageNumber);
+			page.setPageSize(PageSize);
+			page.setTotalNumberOfPages(123);
+			page.setTotalNumberOfRecords(len);
+			page.setResults(lastResult);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
+	}
+	
 	@Override
 	public void CreateNewCategory(NewCategory nc)  {
 		try {

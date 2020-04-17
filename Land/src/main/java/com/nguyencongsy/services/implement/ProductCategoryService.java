@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nguyencongsy.models.Page;
 import com.nguyencongsy.models.ProductCategory;
 import com.nguyencongsy.repositories.IProductCategoryRepository;
 import com.nguyencongsy.services.IProductCategoryService;
@@ -75,6 +76,36 @@ public class ProductCategoryService implements IProductCategoryService {
 		}
 		return lastResult;
 	}
+	
+	@Override
+	public Page<ProductCategory> GetPage(int PageSize, int PageNumber)  {
+		int i;
+		int len;
+		Page<ProductCategory> page = new Page<ProductCategory>();
+		List<ProductCategory> result = null;
+		List<ProductCategory> lastResult = new ArrayList<ProductCategory>();
+		try {
+			result = repository.findAll();
+			len = result.size();
+			if (PageNumber*PageSize < len) {
+				for (i=PageNumber*PageSize; i<PageNumber*PageSize+PageSize; i++)
+				{
+					if (i<len) {
+						lastResult.add(result.get(i));
+					}
+				}
+			page.setPageNumber(PageNumber);
+			page.setPageSize(PageSize);
+			page.setTotalNumberOfPages(123);
+			page.setTotalNumberOfRecords(len);
+			page.setResults(lastResult);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
+	}
+	
 	@Override
 	public void CreateProductCategory(ProductCategory pc)  {
 		try {
