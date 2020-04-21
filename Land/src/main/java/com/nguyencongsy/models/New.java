@@ -5,6 +5,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,10 +15,11 @@ import javax.persistence.Table;
 public class New implements Serializable{
 	@Id
 	@Column(name = "NewId")
-	public String NewId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int NewId;
 	
 	@Column(name = "NewCategoryId")
-    public String NewCategoryId;
+    public int NewCategoryId;
 	
 	@Column(name = "NewName")
     public String NewName;
@@ -52,16 +55,16 @@ public class New implements Serializable{
     public String Id;
     
     /*Get and Set */
-	public String getNewId() {
+	public int getNewId() {
 		return NewId;
 	}
-	public void setNewId(String newId) {
+	public void setNewId(int newId) {
 		NewId = newId;
 	}
-	public String getNewCategoryId() {
+	public int getNewCategoryId() {
 		return NewCategoryId;
 	}
-	public void setNewCategoryId(String newCategoryId) {
+	public void setNewCategoryId(int newCategoryId) {
 		NewCategoryId = newCategoryId;
 	}
 	public String getNewName() {
@@ -132,10 +135,21 @@ public class New implements Serializable{
 	}
 	public New() {}
 	
-	public New(String NewId, String NewName, String NewSortName, 
-				String NewDescription, String NewCategoryId, String NewTag,
+	public New(int NewId, String NewName, String NewSortName, 
+				String NewDescription, int NewCategoryId, String NewTag,
 				String NewBody, boolean IsHotNew){
 		this.NewId = NewId;
+		this.NewName = NewName;
+		this.NewSortName = NewSortName;
+		this.NewDescription = NewDescription;
+		this.NewCategoryId = NewCategoryId;
+		this.NewTag = NewTag;
+		this.NewBody = NewBody;
+		this.IsHotNew = IsHotNew;
+	}
+		public New(String NewName, String NewSortName, 
+				String NewDescription, int NewCategoryId, String NewTag,
+				String NewBody, boolean IsHotNew){
 		this.NewName = NewName;
 		this.NewSortName = NewSortName;
 		this.NewDescription = NewDescription;

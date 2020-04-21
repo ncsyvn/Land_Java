@@ -5,6 +5,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,7 +15,8 @@ import javax.persistence.Table;
 public class NewCategory implements Serializable{
 	@Id
 	@Column(name = "NewCategoryId")
-	public String NewCategoryId; 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int NewCategoryId; 
 	
 	@Column(name = "NewCategoryName")
     public String NewCategoryName;
@@ -34,10 +37,10 @@ public class NewCategory implements Serializable{
     public String Id;
     
     /* Get and Set */
-	public String getNewCategoryId() {
+	public int getNewCategoryId() {
 		return NewCategoryId;
 	}
-	public void setNewCategoryId(String newCategoryId) {
+	public void setNewCategoryId(int newCategoryId) {
 		NewCategoryId = newCategoryId;
 	}
 	public String getNewCategoryName() {
@@ -77,8 +80,13 @@ public class NewCategory implements Serializable{
 		Id = id;
 	}
 	public NewCategory() {}
-	public NewCategory(String NewCategoryId, String NewCategoryName, int OrderNo, boolean IsActive) {
+	public NewCategory(int NewCategoryId, String NewCategoryName, int OrderNo, boolean IsActive) {
 		this.NewCategoryId = NewCategoryId;
+		this.NewCategoryName = NewCategoryName;
+		this.OrderNo = OrderNo;
+		this.IsActive = IsActive;
+	}
+	public NewCategory(String NewCategoryName, int OrderNo, boolean IsActive) {
 		this.NewCategoryName = NewCategoryName;
 		this.OrderNo = OrderNo;
 		this.IsActive = IsActive;

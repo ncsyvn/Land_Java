@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nguyencongsy.models.Page;
 import com.nguyencongsy.models.Product;
 import com.nguyencongsy.repositories.IProductRepository;
 import com.nguyencongsy.services.IProductService;
+import com.nguyencongsy.utils.ProcessImage;
 
 @Service
 public class ProductService implements IProductService {
@@ -62,13 +64,13 @@ public class ProductService implements IProductService {
 	}
 	
 	@Override
-	public List<Product> GetDetailProduct (String ProductId){
+	public List<Product> GetDetailProduct (int ProductId){
 		List<Product> result = null;
 		List<Product> lastResult = new ArrayList<Product>();
 		try {
 			result = repository.findAll();
 			for (Product p:result){
-				if((p.getProductId()).toLowerCase().contains(ProductId.toLowerCase()) == true) {
+				if(p.getProductId() == ProductId) {
 					lastResult.add(p);
 				}
 			}
@@ -125,12 +127,52 @@ public class ProductService implements IProductService {
 		}
 	}
 	@Override
-	public void DeleteProduct(String ProductId)  {
+	public void DeleteProduct(int ProductId)  {
+		List<Product> result = null;
+		ArrayList<Product> lastResult = new ArrayList<Product>();
 		try {
-			repository.deleteById(ProductId);
+			result = repository.findAll();
+			for (Product p:result){
+				if(p.getProductId() == ProductId) {
+					lastResult.add(p);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (lastResult.size() != 0)
+		{
+			repository.delete(lastResult.get(0));
 		} 
+	}
+	@Override
+	public String UploadImages(ArrayList<MultipartFile> images, int ProductId)  {
+		try {
+			int i;
+			MultipartFile image;
+			String productImages = "";
+			String fileName = "";
+			for (i=0; i<images.size(); i++) {
+				image = images.get(i);
+				fileName = ProcessImage.saveFile(image);
+				productImages = productImages + fileName + "*";
+			}
+			
+			List<Product> result = null;
+			result = repository.findAll();
+			for (Product p:result){
+				if(p.getProductId() == ProductId) {
+					p.setProductImage(productImages);
+					repository.save(p);
+					break;
+				}	
+			}
+			return productImages;
+		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		return "";
 	}
 }

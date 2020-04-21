@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nguyencongsy.models.New;
 import com.nguyencongsy.models.NewCategory;
 import com.nguyencongsy.models.Page;
 import com.nguyencongsy.repositories.INewCategoryRepository;
@@ -28,13 +29,13 @@ public class NewCategoryService implements INewCategoryService {
 	}
 	
 	@Override
-	public List<NewCategory> SearchNewCategoryById(String newCategoryId){
+	public List<NewCategory> SearchNewCategoryById(int newCategoryId){
 		List<NewCategory> result = null;
 		List<NewCategory> lastResult = new ArrayList<NewCategory>();
 		try {
 			result = repository.findAll();
 			for (NewCategory nc:result){
-				if(nc.getNewCategoryId().toLowerCase().contains(newCategoryId.toLowerCase()) == true) {
+				if(nc.getNewCategoryId()==newCategoryId) {
 					lastResult.add(nc);
 				}
 			}
@@ -91,12 +92,23 @@ public class NewCategoryService implements INewCategoryService {
 		}
 	}
 	@Override
-	public void DeleteNewCategory(String NewCategoryId)  {
+	public void DeleteNewCategory(int NewCategoryId)  {
+		List<NewCategory> result = null;
+		ArrayList<NewCategory> lastResult = new ArrayList<NewCategory>();
 		try {
-			repository.deleteById(NewCategoryId);
-		} 
-		catch (Exception e) {
+			result = repository.findAll();
+			for (NewCategory p:result){
+				if(p.getNewCategoryId() == NewCategoryId) {
+					lastResult.add(p);
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		if (lastResult.size() != 0)
+		{
+			repository.delete(lastResult.get(0));
+		} 
 	}
 }

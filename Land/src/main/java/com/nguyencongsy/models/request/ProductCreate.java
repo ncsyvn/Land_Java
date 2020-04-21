@@ -3,7 +3,6 @@ package com.nguyencongsy.models.request;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductCreate{
-    public String ProductId;   
     public String ProductCategoryId;	
     public String ProductName;
     public String ProductSummary;
@@ -18,12 +17,6 @@ public class ProductCreate{
     public int ProductFloors;
     private MultipartFile ProductThumbnail;
 	
-	public String getProductId() {
-		return ProductId;
-	}
-	public void setProductId(String productId) {
-		ProductId = productId;
-	}
 	public String getProductCategoryId() {
 		return ProductCategoryId;
 	}

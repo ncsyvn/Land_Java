@@ -3,8 +3,8 @@ package com.nguyencongsy.models.request;
 import java.sql.Date;
 
 public class NewUpdate{
-	 public String NewId;
-     public String NewCategoryId;    
+	 public int NewId;
+     public int NewCategoryId;    
      public String NewName;
      public String NewSortName;
      public String NewImage;
@@ -15,16 +15,16 @@ public class NewUpdate{
      public boolean IsHotNew;
      public Date CreateDtime;
      public String NewTag;
-	public String getNewId() {
+	public int getNewId() {
 		return NewId;
 	}
-	public void setNewId(String newId) {
+	public void setNewId(int newId) {
 		NewId = newId;
 	}
-	public String getNewCategoryId() {
+	public int getNewCategoryId() {
 		return NewCategoryId;
 	}
-	public void setNewCategoryId(String newCategoryId) {
+	public void setNewCategoryId(int newCategoryId) {
 		NewCategoryId = newCategoryId;
 	}
 	public String getNewName() {

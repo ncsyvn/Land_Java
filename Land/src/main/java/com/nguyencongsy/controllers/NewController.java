@@ -51,7 +51,7 @@ public class NewController {
 	}
 	
 	@GetMapping(value="/searchById")
-	public @ResponseBody Response SearchNewById(@RequestParam("NewId") String NewId) {
+	public @ResponseBody Response SearchNewById(@RequestParam("NewId") int NewId) {
 		Response<List<New>> res = new Response<List<New>>();
 		try {
 			res.Code = 200;
@@ -91,7 +91,7 @@ public class NewController {
 		Response<String> res = new Response<String>();
 		
 		// Init New with params of ProductCreate Model
-		New n = new New(nc.getNewId(), nc.getNewName(), nc.getNewSortName(), 
+		New n = new New(nc.getNewName(), nc.getNewSortName(), 
 				nc.getNewDescription(), nc.getNewCategoryId(), nc.getNewTag(),
 				nc.getNewBody(), nc.getIsHotNew());
 		
@@ -140,7 +140,7 @@ public class NewController {
 	}
 	
 	@DeleteMapping(value="/delete")
-	public @ResponseBody Response DeleteNew(@RequestParam("NewId") String NewId) {
+	public @ResponseBody Response DeleteNew(@RequestParam("NewId") int NewId) {
 		Response<String> res = new Response<String>();
 		try {
 			newService.DeleteNew(NewId);

@@ -3,6 +3,7 @@ package com.nguyencongsy.controllers;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nguyencongsy.models.Page;
 import com.nguyencongsy.models.ProductCategory;
@@ -125,24 +127,39 @@ public class ProductCategoryController {
 	public @ResponseBody Response CreateProductCategory(@ModelAttribute ProductCategoryCreate pcc) {
 		Response<String> res = new Response<String>();
 		
+		String id  = pcc.getProductCategoryId();
+		if (id == null || id == "") {
+			id = UUID.randomUUID().toString();
+		}
+		String title = pcc.getProductCategoryTitle();
+		String name = pcc.getProductCategoryName();
+		String description = pcc.getProductCategoryDescription();
+		String keyword = pcc.getProductCategoryKeyword();
+		int orderNo = pcc.getOrderNo();
+		
 		// Init Product with params of ProductCategoryCreate Model
-		ProductCategory pc = new ProductCategory(pcc.getProductCategoryId(), pcc.getParentProductCategoryId(), 
-				pcc.getProductCategoryTitle(), pcc.getProductCategoryName(),
-				pcc.getOrderNo(), pcc.getCreateBy(), 
-				pcc.getProductCategoryDescription(), pcc.getProductCategoryKeyword());
+		ProductCategory pc = new ProductCategory(id, pcc.getParentProductCategoryId(), 
+				title, name, orderNo, pcc.getCreateBy(), description, keyword);
 		
 		// Set current time
 		LocalDate now = LocalDate.now();
 		Date date = Date.valueOf(now);
 		pc.setCreateDtime(date);
 		
-		try {
-			// Set image path
-			pc.setProductCategoryImage(ProcessImage.saveFile(pcc.getProductCategoryImage()));
-		}
-		catch(Exception e) {
+		MultipartFile image = pcc.getProductCategoryImage();
+		if (image == null) {
 			pc.setProductCategoryImage(null);
 		}
+		else {
+			try {
+				// Set image path
+				pc.setProductCategoryImage(ProcessImage.saveFile(pcc.getProductCategoryImage()));
+			}
+			catch(Exception e) {
+				pc.setProductCategoryImage(null);
+			}
+		}
+		
 		
 		try {
 			productCategoryService.CreateProductCategory(pc);

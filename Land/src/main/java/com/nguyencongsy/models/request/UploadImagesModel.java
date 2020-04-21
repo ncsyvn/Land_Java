@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class UploadImagesModel {
 	private ArrayList<MultipartFile> images;
-	public String ProductId;
+	public int ProductId;
 	
 	public ArrayList<MultipartFile> getImages() {
 		return images;
@@ -15,10 +15,10 @@ public class UploadImagesModel {
 	public void setImages(ArrayList<MultipartFile> images) {
 		this.images = images;
 	}
-	public String getProductId() {
+	public int getProductId() {
 		return ProductId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(int productId) {
 		ProductId = productId;
 	}
 	

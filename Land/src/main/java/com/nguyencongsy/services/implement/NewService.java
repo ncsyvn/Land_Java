@@ -28,13 +28,13 @@ public class NewService implements INewService {
 	}
 	
 	@Override
-	public List<New> SearchNewById(String NewId){
+	public List<New> SearchNewById(int NewId){
 		List<New> result = null;
 		List<New> lastResult = new ArrayList<New>();
 		try {
 			result = repository.findAll();
 			for (New n:result){
-				if(n.getNewId().toLowerCase().contains(NewId.toLowerCase()) == true) {
+				if(n.getNewId()==NewId) {
 					lastResult.add(n);
 				}
 			}
@@ -92,12 +92,23 @@ public class NewService implements INewService {
 		}
 	}
 	@Override
-	public void DeleteNew(String NewId)  {
+	public void DeleteNew(int NewId)  {
+		List<New> result = null;
+		ArrayList<New> lastResult = new ArrayList<New>();
 		try {
-			repository.deleteById(NewId);
-		} 
-		catch (Exception e) {
+			result = repository.findAll();
+			for (New p:result){
+				if(p.getNewId() == NewId) {
+					lastResult.add(p);
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		if (lastResult.size() != 0)
+		{
+			repository.delete(lastResult.get(0));
+		} 
 	}
 }

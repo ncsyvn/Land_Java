@@ -5,6 +5,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,7 +15,8 @@ import javax.persistence.Table;
 public class Product implements Serializable{
 	@Id
 	@Column(name = "ProductId")
-    public String ProductId;   
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int ProductId;   
 		
 	@Column(name = "ProductCategoryId")
     public String ProductCategoryId;	
@@ -78,10 +81,28 @@ public class Product implements Serializable{
 	
 	public Product() {}
 	
-	public Product(String ProductId, String ProductCategoryId, String ProductName, String ProductSummary,
+	public Product(String ProductCategoryId, String ProductName, String ProductSummary,
 			double ProductPrice, double ProductArea, int ProductBedrooms, int ProductBathrooms,
 			String ProductAddress, int OrderNo, boolean IsHotProduct, double ProductPriceMeter, int ProductFloors) {
 			
+		this.ProductCategoryId = ProductCategoryId;
+		this.ProductName = ProductName;
+		this.ProductSummary = ProductSummary;
+		this.ProductPrice = ProductPrice;
+		this.ProductArea = ProductArea;
+		this.ProductBedrooms = ProductBedrooms;
+		this.ProductBathrooms = ProductBathrooms;
+		this.ProductAddress = ProductAddress;
+		this.OrderNo = OrderNo;
+		this.IsHotProduct = IsHotProduct;
+		this.ProductPriceMeter = ProductPriceMeter;
+		this.ProductFloors = ProductFloors;
+	}
+	
+	public Product(int ProductId, String ProductCategoryId, String ProductName, String ProductSummary,
+			double ProductPrice, double ProductArea, int ProductBedrooms, int ProductBathrooms,
+			String ProductAddress, int OrderNo, boolean IsHotProduct, double ProductPriceMeter, int ProductFloors) {
+		
 		this.ProductId = ProductId;
 		this.ProductCategoryId = ProductCategoryId;
 		this.ProductName = ProductName;
@@ -97,10 +118,11 @@ public class Product implements Serializable{
 		this.ProductFloors = ProductFloors;
 	}
 	
-	public String getProductId() {
+	
+	public int getProductId() {
 		return ProductId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(int productId) {
 		ProductId = productId;
 	}
 	public String getProductCategoryId() {

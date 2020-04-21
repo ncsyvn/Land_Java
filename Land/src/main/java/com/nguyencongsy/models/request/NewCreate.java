@@ -1,10 +1,7 @@
 package com.nguyencongsy.models.request;
 
-import java.sql.Date;
-
 public class NewCreate{
-    public String NewId;
-    public String NewCategoryId; 
+    public int NewCategoryId; 
     public String NewName;
     public String NewSortName;
     public String NewDescription;
@@ -12,16 +9,10 @@ public class NewCreate{
     public boolean IsHotNew;
     public String NewTag;
     
-	public String getNewId() {
-		return NewId;
-	}
-	public void setNewId(String newId) {
-		NewId = newId;
-	}
-	public String getNewCategoryId() {
+	public int getNewCategoryId() {
 		return NewCategoryId;
 	}
-	public void setNewCategoryId(String newCategoryId) {
+	public void setNewCategoryId(int newCategoryId) {
 		NewCategoryId = newCategoryId;
 	}
 	public String getNewName() {

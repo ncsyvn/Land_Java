@@ -1,7 +1,7 @@
 package com.nguyencongsy.models.request;
 
 public class NewCategoryUpdate {
-	public String NewCategoryId;
+	public int NewCategoryId;
 	public String NewCategoryName;
 	public int OrderNo;
 	public boolean IsActive;
@@ -12,10 +12,10 @@ public class NewCategoryUpdate {
 	public void setIsActive(boolean isActive) {
 		IsActive = isActive;
 	}
-	public String getNewCategoryId() {
+	public int getNewCategoryId() {
 		return NewCategoryId;
 	}
-	public void setNewCategoryId(String newCategoryId) {
+	public void setNewCategoryId(int newCategoryId) {
 		NewCategoryId = newCategoryId;
 	}
 	public String getNewCategoryName() {

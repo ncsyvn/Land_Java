@@ -1,16 +1,9 @@
 package com.nguyencongsy.models.request;
 
 public class NewCategoryCreate {
-	public String NewCategoryId;
 	public String NewCategoryName;
 	public int OrderNo;
 	
-	public String getNewCategoryId() {
-		return NewCategoryId;
-	}
-	public void setNewCategoryId(String newCategoryId) {
-		NewCategoryId = newCategoryId;
-	}
 	public String getNewCategoryName() {
 		return NewCategoryName;
 	}

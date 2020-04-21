@@ -49,7 +49,7 @@ public class NewCategoryController {
 	}
 	
 	@GetMapping(value="/searchById")
-	public @ResponseBody Response SearchNewCategoryById(@RequestParam("NewCategoryId") String NewCategoryId) {
+	public @ResponseBody Response SearchNewCategoryById(@RequestParam("NewCategoryId") int NewCategoryId) {
 		Response<List<NewCategory>> res = new Response<List<NewCategory>>();
 		try {
 			res.Code = 200;
@@ -89,7 +89,7 @@ public class NewCategoryController {
 		Response<String> res = new Response<String>();
 		
 		// Init NewCategory with params of NewCategoryCreate Model
-		NewCategory nc = new NewCategory(ncc.getNewCategoryId(), ncc.getNewCategoryName(), ncc.getOrderNo(), true);
+		NewCategory nc = new NewCategory(ncc.getNewCategoryName(), ncc.getOrderNo(), true);
 		
 		
 		// Set current time
@@ -141,7 +141,7 @@ public class NewCategoryController {
 		return res;
 	}
 	@DeleteMapping(value="/delete")
-	public @ResponseBody Response DeleteNewCategpru(@RequestParam("NewCategoryId") String NewCategoryId) {
+	public @ResponseBody Response DeleteNewCategory(@RequestParam("NewCategoryId") int NewCategoryId) {
 		Response<String> res = new Response<String>();
 		try {
 			newCategoryService.DeleteNewCategory(NewCategoryId);

@@ -90,7 +90,7 @@ public class ProductController {
 	}
 	
 	@GetMapping(value="/searchById")
-	public @ResponseBody Response GetDetailProduct(@RequestParam("ProductId") String ProductId) {
+	public @ResponseBody Response GetDetailProduct(@RequestParam("ProductId") int ProductId) {
 		Response<List<Product>> res = new Response<List<Product>>();
 		try {
 			res.Code = 200;
@@ -128,7 +128,7 @@ public class ProductController {
 		Response<String> res = new Response<String>();
 		
 		// Init Product with params of ProductCreate Model
-		Product p = new Product(pc.getProductId(), pc.getProductCategoryId(), pc.getProductName(), pc.getProductSummary(),
+		Product p = new Product(pc.getProductCategoryId(), pc.getProductName(), pc.getProductSummary(),
 				pc.getProductPrice(), pc.getProductArea(), pc.getProductBedrooms(), pc.getProductBathrooms(),
 				pc.getProductAddress(), pc.getOrderNo(), pc.getIsHotProduct(), pc.getProductPriceMeter(), pc.getProductFloors());
 		
@@ -198,7 +198,7 @@ public class ProductController {
 	}
 	
 	@DeleteMapping(value="/delete")
-	public @ResponseBody Response DeleteProduct(@RequestParam("ProductId") String ProductId) {
+	public @ResponseBody Response DeleteProduct(@RequestParam("ProductId") int ProductId) {
 		Response<String> res = new Response<String>();
 		try {
 			productService.DeleteProduct(ProductId);
@@ -218,12 +218,8 @@ public class ProductController {
 	@PostMapping(value = "/images/upload")
 	public @ResponseBody Response UploadImages(@ModelAttribute UploadImagesModel data) {
 		Response<String> res = new Response<String>();
-		String s = "";
 		ArrayList<MultipartFile> images = data.getImages();
-		for (int i=0; i<images.size(); i++) {
-			s = s + images.get(i).getOriginalFilename();
-		}
-		
+		String s = productService.UploadImages(images, data.getProductId());
 		try {
 			res.Code = 200;
 			res.Message = "Success";
