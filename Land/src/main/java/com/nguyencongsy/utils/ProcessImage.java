@@ -19,12 +19,12 @@ public class ProcessImage {
 				bytes = file.getBytes();
 				String fileName = file.getOriginalFilename();
 				fileName = fileName.split("\\.")[0];
-				String fileLocation = new File("uploads") + "\\" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
+				String fileLocation = new File("Uploads") + "\\" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
 				FileOutputStream fos = new FileOutputStream(fileLocation);
 				fos.write(bytes);
 				fos.close();
 				
-				return "/uploads/" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
+				return "/Uploads/" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.nguyencongsy.models.User;
 
 @Repository
-public interface IUserRepository extends JpaRepository<User, String> {
+public interface IUserRepository extends JpaRepository<User, Integer> {
+	User findByUsername(String username);
 }
