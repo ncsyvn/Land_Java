@@ -81,6 +81,173 @@ public class ProductService implements IProductService {
 	}
 	
 	@Override
+	public List<Product> SearchByAllValue(String ParentProductCategoryId, String ProductCategoryId,
+            float ProductPriceStart, float ProductPriceEnd, float ProductAreaStart, 
+            float ProductAreaEnd, String ProductAddress){
+		
+		int checkProductCategoryId = 1;
+        int checkPrice = 1;
+        int checkArea = 1;
+        int checkAddress = 1;
+
+        if (ProductCategoryId == "") checkProductCategoryId = 0;
+        if (ProductPriceStart == 0 && ProductPriceEnd == 0) checkPrice = 0;
+        if (ProductAreaStart == 0 && ProductAreaEnd == 0) checkArea = 0;
+        if (ProductAddress == "") checkAddress = 0;
+        
+        List<Product> result = null;
+		List<Product> lastResult = new ArrayList<Product>();
+		result = repository.findAll();
+		
+		
+		if (checkProductCategoryId == 0 && checkPrice == 0 && checkArea == 0 && checkAddress == 0){
+			for (Product p:result){
+					lastResult.add(p);
+				}
+			}
+        else if (checkProductCategoryId == 0 && checkPrice == 0 && checkArea == 0 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductAddress() != null &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+				lastResult.add(p);
+			}
+		}
+        else if (checkProductCategoryId == 0 && checkPrice == 0 && checkArea == 1 && checkAddress == 0){
+        	for (Product p:result){
+        		if (p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 0 && checkPrice == 0 && checkArea == 1 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductAddress() != null &&
+        				p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+        			lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 0 && checkPrice == 1 && checkArea == 0 && checkAddress == 0){
+        	for (Product p:result){
+        		if (p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 0 && checkPrice == 1 && checkArea == 0 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductAddress() != null &&
+        				p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 0 && checkPrice == 1 && checkArea == 1 && checkAddress == 0){
+        	for (Product p:result){
+        		if (p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd &&
+                		p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 0 && checkPrice == 1 && checkArea == 1 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductAddress() != null &&
+        				p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd &&
+                		p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+				lastResult.add(p);
+			}
+        }
+		
+		
+		
+		
+		// Is category is not null
+		if (checkProductCategoryId == 1 && checkPrice == 0 && checkArea == 0 && checkAddress == 0){
+			for (Product p:result){
+				if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true)
+					lastResult.add(p);
+				}
+			}
+        else if (checkProductCategoryId == 1 && checkPrice == 0 && checkArea == 0 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true &&
+        				p.getProductAddress() != null &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+				lastResult.add(p);
+			}
+		}
+        else if (checkProductCategoryId == 1 && checkPrice == 0 && checkArea == 1 && checkAddress == 0){
+        	for (Product p:result){
+        		if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true &&
+        				p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 1 && checkPrice == 0 && checkArea == 1 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true &&
+        				p.getProductAddress() != null &&
+        				p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+        			lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 1 && checkPrice == 1 && checkArea == 0 && checkAddress == 0){
+        	for (Product p:result){
+        		if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true &&
+        				p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 1 && checkPrice == 1 && checkArea == 0 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true &&
+        				p.getProductAddress() != null &&
+        				p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 1 && checkPrice == 1 && checkArea == 1 && checkAddress == 0){
+        	for (Product p:result){
+        		if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true &&
+        				p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd &&
+                		p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd)
+				lastResult.add(p);
+			}
+        }
+
+        else if (checkProductCategoryId == 1 && checkPrice == 1 && checkArea == 1 && checkAddress == 1){
+        	for (Product p:result){
+        		if (p.getProductCategoryId() != null &&
+        				p.getProductCategoryId().toLowerCase().contains(ProductCategoryId.toLowerCase())==true &&
+        				p.getProductAddress() != null &&
+        				p.getProductPrice()>=ProductPriceStart && p.getProductPrice()<=ProductPriceEnd &&
+                		p.getProductArea()>=ProductAreaStart && p.getProductArea()<=ProductAreaEnd &&
+        				p.getProductAddress().toLowerCase().contains(ProductAddress.toLowerCase())==true)
+				lastResult.add(p);
+			}
+        }
+		
+		return lastResult;
+	}
+	
+	@Override
 	public Page<Product> GetPage(int PageSize, int PageNumber)  {
 		int i;
 		int len;

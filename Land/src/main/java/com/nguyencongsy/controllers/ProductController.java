@@ -105,6 +105,32 @@ public class ProductController {
 		}
 		return res;
 	}
+	
+	@GetMapping(value="/searchByAllValue")
+	public @ResponseBody Response SearchByAllValue(
+			@RequestParam("ParentProductCategoryId") String ParentProductCategoryId,
+			@RequestParam("ProductCategoryId") String ProductCategoryId,
+			@RequestParam("ProductPriceStart") float ProductPriceStart,
+			@RequestParam("ProductPriceEnd") float ProductPriceEnd,
+			@RequestParam("ProductAreaStart") float ProductAreaStart,
+			@RequestParam("ProductAreaEnd") float ProductAreaEnd,
+			@RequestParam("ProductAddress") String ProductAddress) {
+		Response<List<Product>> res = new Response<List<Product>>();
+		try {
+			res.Code = 200;
+			res.Message = "Success";
+			res.Data = productService.SearchByAllValue(
+					ParentProductCategoryId, ProductCategoryId, ProductPriceStart, 
+					ProductPriceEnd, ProductAreaStart, ProductAreaEnd, ProductAddress);
+		}
+		catch(Exception e) {
+			res.Code = 500;
+			res.Message = "Fail";
+			res.Data = null;
+			System.out.print(e.getMessage());
+		}
+		return res;
+	}
 	@GetMapping(value="/page")
 	public @ResponseBody Response GetPage(@RequestParam("pagesize") int pagesize, 
 			@RequestParam("pagenumber") int pagenumber) {

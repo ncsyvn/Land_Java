@@ -18,12 +18,13 @@ public class ProcessImage {
 				int rand_int = rand.nextInt(1000000); 
 				bytes = file.getBytes();
 				String fileName = file.getOriginalFilename();
-				String fileLocation = new File("uploads") + "\\" + fileName; // + "_" + String.valueOf(rand_int);
+				fileName = fileName.split("\\.")[0];
+				String fileLocation = new File("uploads") + "\\" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
 				FileOutputStream fos = new FileOutputStream(fileLocation);
 				fos.write(bytes);
 				fos.close();
 				
-				return "/uploads/" + fileName; // + "_" + String.valueOf(rand_int);
+				return "/uploads/" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

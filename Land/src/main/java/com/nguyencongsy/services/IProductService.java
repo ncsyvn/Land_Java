@@ -13,6 +13,9 @@ public interface  IProductService {
 	List<Product> SearchProductsByName(String ProductName);
 	List<Product> SearchProductsByProductCategory(String ProductCategoryId);
 	List<Product> GetDetailProduct(int ProductId);
+	List<Product> SearchByAllValue(String ParentProductCategoryId, String ProductCategoryId,
+            float ProductPriceStart, float ProductPriceEnd, float ProductAreaStart, 
+            float ProductAreaEnd, String ProductAddress);
 	Page<Product> GetPage(int PageSize, int PageNumber);
 	void CreateProduct(Product p);
 	void UpdateProduct(Product p);

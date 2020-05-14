@@ -78,6 +78,22 @@ public class ProductCategoryService implements IProductCategoryService {
 	}
 	
 	@Override
+	public List<ProductCategory> GetByParent(String ParentProductCategoryId){
+		List<ProductCategory> result = null;
+		List<ProductCategory> lastResult = new ArrayList<ProductCategory>();
+		try {
+			result = repository.findAll();
+			for (ProductCategory pc:result){
+				if((pc.getParentProductCategoryId()).toLowerCase().contains(ParentProductCategoryId.toLowerCase()) == true) {
+					lastResult.add(pc);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lastResult;
+	}
+	@Override
 	public Page<ProductCategory> GetPage(int PageSize, int PageNumber)  {
 		int i;
 		int len;

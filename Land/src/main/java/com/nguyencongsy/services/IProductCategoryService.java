@@ -10,6 +10,7 @@ public interface  IProductCategoryService {
 	List<ProductCategory> SearchProductCategoriesByName(String ProductCategoryName);
 	List<ProductCategory> GetDetailProductCategory(String ProductCategoryId);
 	List<ProductCategory> GetAllParentProductCategories();
+	List<ProductCategory> GetByParent(String ParentProductCategoryId);
 	Page<ProductCategory> GetPage(int PageSize, int PageNumber);
 	void CreateProductCategory(ProductCategory pc);
 	void UpdateProductCategory(ProductCategory p);

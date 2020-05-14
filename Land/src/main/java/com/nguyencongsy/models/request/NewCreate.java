@@ -1,5 +1,7 @@
 package com.nguyencongsy.models.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class NewCreate{
     public int NewCategoryId; 
     public String NewName;
@@ -8,7 +10,15 @@ public class NewCreate{
     public String NewBody;
     public boolean IsHotNew;
     public String NewTag;
+    public MultipartFile NewImage;
     
+    
+	public MultipartFile getNewImage() {
+		return NewImage;
+	}
+	public void setNewImage(MultipartFile newImage) {
+		NewImage = newImage;
+	}
 	public int getNewCategoryId() {
 		return NewCategoryId;
 	}

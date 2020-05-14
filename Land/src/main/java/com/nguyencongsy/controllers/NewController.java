@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nguyencongsy.models.New;
 import com.nguyencongsy.models.Page;
-import com.nguyencongsy.models.Product;
 import com.nguyencongsy.models.Response;
 import com.nguyencongsy.models.request.NewCreate;
 import com.nguyencongsy.models.request.NewUpdate;
 import com.nguyencongsy.services.INewService;
+import com.nguyencongsy.utils.ProcessImage;
 @CrossOrigin
 @Controller
 @RequestMapping("/api/News")
@@ -90,7 +90,7 @@ public class NewController {
 	public @ResponseBody Response CreateNew(@ModelAttribute NewCreate nc) {
 		Response<String> res = new Response<String>();
 		
-		// Init New with params of ProductCreate Model
+		// Init New with params of NewCreate Model
 		New n = new New(nc.getNewName(), nc.getNewSortName(), 
 				nc.getNewDescription(), nc.getNewCategoryId(), nc.getNewTag(),
 				nc.getNewBody(), nc.getIsHotNew());
@@ -100,7 +100,13 @@ public class NewController {
 		LocalDate now = LocalDate.now();
 		Date date = Date.valueOf(now);
 		n.setCreateDtime(date);
-		
+		try {
+			// Set thumbnail path
+			n.setNewImage(ProcessImage.saveFile(nc.getNewImage()));
+		}
+		catch(Exception e) {
+			n.setNewImage(null);
+		}
 		try {
 			newService.CreateNew(n);
 			res.Code = 200;

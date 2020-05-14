@@ -3,7 +3,6 @@ package com.nguyencongsy.models.request;
 public class NewCategoryCreate {
 	public String NewCategoryName;
 	public int OrderNo;
-	
 	public String getNewCategoryName() {
 		return NewCategoryName;
 	}

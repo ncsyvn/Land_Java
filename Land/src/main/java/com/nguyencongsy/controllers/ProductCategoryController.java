@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,6 +60,24 @@ public class ProductCategoryController {
 			res.Code = 200;
 			res.Message = "Success";
 			res.Data = productCategoryService.SearchProductCategoriesByName(ProductCategoryName);
+		}
+		catch(Exception e) {
+			res.Code = 500;
+			res.Message = "Fail";
+			res.Data = null;
+			System.out.print(e.getMessage());
+
+		}
+		return res;
+	}
+	@GetMapping(value="/getByParent")
+	public @ResponseBody Response GetByParent(
+			@RequestParam("parentProductCategoryId") String parentProductCategoryId) {
+		Response<List<ProductCategory>> res = new Response<List<ProductCategory>>();
+		try {
+			res.Code = 200;
+			res.Message = "Success";
+			res.Data = productCategoryService.GetByParent(parentProductCategoryId);
 		}
 		catch(Exception e) {
 			res.Code = 500;
@@ -128,9 +147,7 @@ public class ProductCategoryController {
 		Response<String> res = new Response<String>();
 		
 		String id  = pcc.getProductCategoryId();
-		if (id == null || id == "") {
-			id = UUID.randomUUID().toString();
-		}
+		id = UUID.randomUUID().toString();
 		String title = pcc.getProductCategoryTitle();
 		String name = pcc.getProductCategoryName();
 		String description = pcc.getProductCategoryDescription();
@@ -175,7 +192,7 @@ public class ProductCategoryController {
 		}
 		return res;
 	}
-	@PostMapping(value = "/update")
+	@PutMapping(value = "/update")
 	public @ResponseBody Response UpdateProductCategory(@ModelAttribute ProductCategoryUpdate pcu) {
 		Response<String> res = new Response<String>();
 		
