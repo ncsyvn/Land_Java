@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.nguyencongsy.services.implement.UserService;
@@ -20,6 +21,7 @@ import com.nguyencongsy.services.implement.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
+@CrossOrigin
 public class JwtRequestFilter extends OncePerRequestFilter {
 	private final String jwtTokenCookieName = "JWT-TOKEN";
 	@Autowired

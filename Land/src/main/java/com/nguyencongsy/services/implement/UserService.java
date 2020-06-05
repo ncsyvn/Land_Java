@@ -50,6 +50,14 @@ public class UserService implements UserDetailsService, IUserRoleService, IUserS
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				new ArrayList<>());
 	}
+	public User loadUserByName(String username) throws UsernameNotFoundException {
+
+		User user = userDao.findByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found with username: " + username);
+		}
+		return user;
+	}
 	public User save(UserDTO user) {
 		User newUser = new User();
 		newUser.setUsername(user.getUsername());
@@ -80,7 +88,7 @@ public class UserService implements UserDetailsService, IUserRoleService, IUserS
 	@Override
 	public User SearchUserById(int userid) {
 		// TODO Auto-generated method stub
-		return null;
+				return null;
 	}
 	@Override
 	public Page<User> GetPage(int PageSize, int PageNumber) {

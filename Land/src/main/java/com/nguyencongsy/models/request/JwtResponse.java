@@ -8,10 +8,12 @@ public class JwtResponse implements Serializable {
 	private final String access_token;
 	private final String userName;
 	private final String roleName;
-	public JwtResponse(String access_token, String userName, String roleName) {
+	private final int userId;
+	public JwtResponse(String access_token, String userName, String roleName, int userId) {
 		this.access_token = access_token;
 		this.userName = userName;
 		this.roleName = roleName;
+		this.userId = userId;
 	}
 
 	public String getAccessToken() {
@@ -22,5 +24,8 @@ public class JwtResponse implements Serializable {
 	}
 	public String getRoleName() {
 		return this.roleName;
+	}
+	public int getUserId() {
+		return this.userId;
 	}
 }

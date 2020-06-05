@@ -1,6 +1,7 @@
 package com.nguyencongsy.services.implement;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,15 @@ import com.nguyencongsy.repositories.IProductRepository;
 import com.nguyencongsy.services.IProductService;
 import com.nguyencongsy.utils.ProcessImage;
 
+class Sortbyroll implements Comparator<Product> 
+{ 
+    // Used for sorting in ascending order of 
+    // roll number 
+	public int compare(Product a, Product b) 
+    { 
+		return  (int)(a.ProductPrice - b.ProductPrice); 
+    } 
+}
 @Service
 public class ProductService implements IProductService {
 	@Autowired 
@@ -79,7 +89,7 @@ public class ProductService implements IProductService {
 		}
 		return lastResult;
 	}
-	
+	 
 	@Override
 	public List<Product> SearchByAllValue(String ParentProductCategoryId, String ProductCategoryId,
             float ProductPriceStart, float ProductPriceEnd, float ProductAreaStart, 
@@ -243,7 +253,7 @@ public class ProductService implements IProductService {
 				lastResult.add(p);
 			}
         }
-		
+		lastResult.sort(new Sortbyroll());
 		return lastResult;
 	}
 	

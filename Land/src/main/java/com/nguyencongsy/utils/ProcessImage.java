@@ -24,7 +24,7 @@ public class ProcessImage {
 				fos.write(bytes);
 				fos.close();
 				
-				return "/Uploads/" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
+				return "Uploads/" + fileName + "_" + String.valueOf(rand_int) + ".jpg";
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
